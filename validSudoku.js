@@ -4,12 +4,15 @@ var isValidSudoku = function(board) {
 
     let flag = true;
 
-    // if(decideByRow(board)){
-    //     decideByColumn(board)
-    // }
-
-    console.log(decideBySubBoxes(board));
-
+    if(decideByRow(board)){
+        if(decideByColumn(board)){
+            let subBoxes = createSubBoxes(board);
+            let mergeBoxes = mergeArrays(subBoxes);
+            if(decideByRow(mergeBoxes)){
+                flag = flag;
+            };
+        };
+    }; 
 
     function decideByRow(board){
 
@@ -62,21 +65,18 @@ var isValidSudoku = function(board) {
 
     };
 
-    function decideBySubBoxes(board){
+    function createSubBoxes(board){
 
         let arr = [];
 
         for(let i = 0; i <= board.length - 1;){
             
-            console.log("Inisde one")
             let arr1 = [];
 
             let now = 0;
             let now1 = 3;
 
                 for(let j = 0; j <= 2; j++){
-
-                        console.log("Inisde sec")
 
                         let one = board[i].slice(now, now1);
                         let two = board[i+1].slice(now, now1);
@@ -102,14 +102,26 @@ var isValidSudoku = function(board) {
 
     };
 
+    function mergeArrays(arr){
 
+        for(let i = 0; i <= arr.length -1; i++){
+
+            let arr1 = [];
+
+            arr[i] = arr1.concat(arr[i][0], arr[i][1], arr[i][2])
+
+        };
+
+        return arr;
+
+    };
 
     return flag;
     
 };
 
 let board = 
-[["5","3",".",".","7",".",".",".","."]
+[["8","3",".",".","7",".",".",".","."]
 ,["6",".",".","1","9","5",".",".","."]
 ,[".","9","8",".",".",".",".","6","."]
 ,["8",".",".",".","6",".",".",".","3"]
@@ -119,4 +131,4 @@ let board =
 ,[".",".",".","4","1","9",".",".","5"]
 ,[".",".",".",".","8",".",".","7","9"]];
 
-console.log(isValidSudoku(board))
+console.log(isValidSudoku(board));
